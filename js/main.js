@@ -1,11 +1,8 @@
-console.log('Main!');
 
 import locService from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 
-locService.getLocs('Ramat gan')
-    .then(locs => console.log('locs', locs))
 
 window.onload = () => {
 
@@ -21,17 +18,14 @@ window.onload = () => {
             const lat = coords.latitude;
             const lng = coords.longitude;
             mapService.initMap(lat, lng);
-        }
-        )
-        .then(() => {
-            mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
         })
-        .catch(console.log('INIT MAP ERROR'));
-
+        // .then(() => {
+        //     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+        // })
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
-
-    console.log('Aha!', ev.target);
-    mapService.panTo(35.6895, 139.6917);
+    const nameLocation = document.querySelector('.name-location').value;
+    locService.getLocs(nameLocation)
+        .then((loc) => mapService.panTo(loc));
 })
