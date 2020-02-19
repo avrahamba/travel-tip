@@ -15,9 +15,15 @@ function getPosition() {
     })
 }
 
-
+function getLocationForSharing() {
+    const lat = marker.getPosition().lat();
+    const lng = marker.getPosition().lng();
+    const strURL = `https://avrahamba.github.io/travel-tip/?lat=${lat}&lat=${lng}&`;
+    return strURL;
+}
 
 export default {
     getLocs: getLocs,
-    getPosition: getPosition
+    getPosition: getPosition,
+    getLocationForSharing:getLocationForSharing
 }
