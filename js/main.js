@@ -30,7 +30,7 @@ window.onload = () => {
         .then(renderWeather)
 }
 
-document.querySelector('.btn').addEventListener('click', (ev) => {
+document.querySelector('.btn-go').addEventListener('click', (ev) => {
     const nameLocation = document.querySelector('.name-location').value;
     locService.getLocs(nameLocation)
         .then(loc => {mapService.panTo(loc);
@@ -38,6 +38,10 @@ document.querySelector('.btn').addEventListener('click', (ev) => {
         })
         .then(loc=>weatherService.getWeather(loc))
         .then(renderWeather)
+})
+
+document.querySelector('.btn-my-copy').addEventListener('click',(ev)=>{
+    console.log('ev :', ev);
 })
 
 function getParameterByName(name, url) {
@@ -65,14 +69,13 @@ function renderWeather(watherObj){
     <img src="https://openweathermap.org/img/wn/${watherObj.icon}@2x.png" alt="">
     <div class="weather-text">
         <p>
-            <span class="location">${watherObj.location}</span>
+            <span class="location">${watherObj.location}, ${watherObj.country}</span>
             <img src="https://www.countryflags.io/${watherObj.country}/flat/32.png" alt="">
             <span class="description">${watherObj.description}</span>
         </p>
         <p>
-            <span class="temp">${watherObj.temp}</span>
-            <span class="min-max-temp">${watherObj['min-temp']}</span>
-            <span class="wind">${watherObj.wind}</span>
+            <span class="temp">${watherObj.temp}°C</span>
+            <span class="min-max-temp"> temperature from ${watherObj['min-temp']} to ${watherObj['max-temp']} °C, wind ${watherObj.wind} m/s</span>
         </p>
     </div>
     `
