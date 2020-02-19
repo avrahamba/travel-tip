@@ -6,8 +6,11 @@ import { mapService } from './services/map.service.js'
 
 window.onload = () => {
 
-
-    locService.getPosition()
+    getPositionFromUrl()
+    .then((pos)=>{
+        if(pos)return pos;
+        else return locService.getPosition()
+    })
         .then(pos => {
             return pos.coords;
         })
@@ -29,3 +32,20 @@ document.querySelector('.btn').addEventListener('click', (ev) => {
     locService.getLocs(nameLocation)
         .then((loc) => mapService.panTo(loc));
 })
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function getPositionFromUrl() {
+    const lat = +getParameterByName('lat');
+    const lng = +getParameterByName('lng');
+    if (!lat || !lng) return Promise.resolve(null);
+    return Promise.resolve({coords:{latitude:lat,longitude:lng}})
+}
