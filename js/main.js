@@ -44,6 +44,11 @@ document.querySelector('.btn-go').addEventListener('click', (ev) => {
 
 document.querySelector('.btn-my-copy').addEventListener('click', (ev) => {
     console.log('ev :', ev);
+    const copyText = locService.getLocationForSharing();
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  document.querySelector('.btn-my-copy').innerText = 'copied!';
 })
 
 document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
