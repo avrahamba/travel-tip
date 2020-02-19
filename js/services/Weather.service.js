@@ -26,16 +26,3 @@ function getWeather(location) {
 }
 
 
-
-
-
-
-`
-    <img src="" alt="">
-        location
-        <span class="flag"></span>
-        <span class="description"></span>
-        <span class="temp"></span>
-        <span class="min-max-temp"></span>
-        <span class="wind"></span>
-`

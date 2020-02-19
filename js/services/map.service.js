@@ -29,14 +29,16 @@ function addMarker(loc) {
         map: map,
         title: 'Hello World!'
     });
+    console.log(marker);
+    
     return marker;
 }
 
 function panTo(location) {
-    addMarker(location)
     const { lat, lng } = location;
     var laLatLng = new google.maps.LatLng(lat, lng);
     map.panTo(laLatLng);
+    return addMarker(location)
 }
 
 function _connectGoogleApi() {

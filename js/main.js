@@ -43,12 +43,17 @@ document.querySelector('.btn-go').addEventListener('click', (ev) => {
 })
 
 document.querySelector('.btn-my-copy').addEventListener('click', (ev) => {
-    console.log('ev :', ev);
     const copyText = getLocationForSharing();
-  copyText.select();
-  copyText.setSelectionRange(0, 99999)
-  document.execCommand("copy");
-  document.querySelector('.btn-my-copy').innerText = 'copied!';
+
+    const el = document.createElement('input');
+    el.type = 'text';
+    el.value = copyText;
+    document.body.appendChild(el);
+    el.select();
+    el.setSelectionRange(0, 99999)
+    document.execCommand('copy');
+    document.querySelector('.btn-my-copy').innerText = 'copied!';
+    document.body.removeChild(el);
 })
 
 function getLocationForSharing() {
@@ -87,7 +92,6 @@ function getPositionFromUrl() {
     return Promise.resolve({ coords: { latitude: lat, longitude: lng } })
 }
 function renderWeather(watherObj) {
-    console.log(watherObj);
 
     document.querySelector('.weather-container').innerHTML =
         `
