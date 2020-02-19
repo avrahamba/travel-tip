@@ -4,7 +4,7 @@ import locService from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 
-locService.getLocs()
+locService.getLocs('Ramat gan')
     .then(locs => console.log('locs', locs))
 
 window.onload = () => {
@@ -31,6 +31,7 @@ window.onload = () => {
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
+
     console.log('Aha!', ev.target);
     mapService.panTo(35.6895, 139.6917);
 })
