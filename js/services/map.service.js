@@ -2,7 +2,8 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getMarkerPos
 }
 
 var map;
@@ -53,4 +54,8 @@ function _connectGoogleApi() {
 }
 
 
-
+function getMarkerPos() {
+    const lat = marker.getPosition().lat();
+    const lng = marker.getPosition().lng();
+    return {lat,lng};
+}

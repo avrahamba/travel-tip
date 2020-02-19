@@ -42,12 +42,18 @@ document.querySelector('.btn-go').addEventListener('click', (ev) => {
 
 document.querySelector('.btn-my-copy').addEventListener('click',(ev)=>{
     console.log('ev :', ev);
-    const copyText = locService.getLocationForSharing();
+    const copyText = getLocationForSharing();
   copyText.select();
   copyText.setSelectionRange(0, 99999)
   document.execCommand("copy");
   document.querySelector('.btn-my-copy').innerText = 'copied!';
 })
+
+function getLocationForSharing() {
+    const pos = mapService.getMarkerPos();
+    const strURL = `https://avrahamba.github.io/travel-tip/?lat=${pos.lat}&lng=${pos.lng}`;
+    return strURL;
+}
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
