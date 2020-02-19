@@ -1,11 +1,9 @@
 var locs = [{ lat: 11.22, lng: 22.11 }]
+const KEY = 'AIzaSyCaQVlcIeYewnFSmm3xkL2d3HHy9xhYbz4';
 
-function getLocs() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(locs);
-        }, 2000)
-    });
+function getLocs(address) {
+    return axios.get(`maps.googleapis.com/maps/api/geocode/json?&address=${address}&key=${KEY}`)
+        .then(res => console.log(res))
 }
 
 
