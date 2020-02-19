@@ -84,7 +84,7 @@ function getPositionFromUrl() {
 function renderWeather(watherObj) {
     console.log(watherObj);
 
-    document.querySelector('.weather').innerHTML =
+    document.querySelector('.weather-container').innerHTML =
         `
     <h2>Weather today</h2>
     <img src="https://openweathermap.org/img/wn/${watherObj.icon}@2x.png" alt="">
