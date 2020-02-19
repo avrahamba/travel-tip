@@ -1,0 +1,10 @@
+body{
+    margin: 0;
+    background-color: lightsalmon;
+}
+
+.constractor{
+    display: grid;
+    grid-template-rows: 4.375em 4.375em 1fr;
+    grid-template-columns: 1fr 1fr;
+}
