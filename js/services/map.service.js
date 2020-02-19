@@ -6,21 +6,24 @@ export const mapService = {
 }
 
 var map;
-
+var marker;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi()
-        .then(() => {
+        .then(() =>
             map = new google.maps.Map(
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
             })
-        })
+        )
 }
-
+function removeMarker() {
+    marker.setMap(null);
+}
 function addMarker(loc) {
-    var marker = new google.maps.Marker({
+    if (marker) removeMarker();
+    marker = new google.maps.Marker({
         position: loc,
         map: map,
         title: 'Hello World!'
@@ -29,6 +32,7 @@ function addMarker(loc) {
 }
 
 function panTo(location) {
+    addMarker(location)
     const { lat, lng } = location;
     var laLatLng = new google.maps.LatLng(lat, lng);
     map.panTo(laLatLng);

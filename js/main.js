@@ -17,11 +17,11 @@ window.onload = () => {
         .then(coords => {
             const lat = coords.latitude;
             const lng = coords.longitude;
-            mapService.initMap(lat, lng);
+            return mapService.initMap(lat, lng);
         })
-        // .then(() => {
-        //     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
-        // })
+        .then((map) => {
+            mapService.addMarker(map.center);
+        })
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
