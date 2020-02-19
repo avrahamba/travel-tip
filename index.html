@@ -10,13 +10,19 @@
 
 <body>
     <div class="container">
-        <h1>TravelTip</h1>
-        <input type="text" class="name-location" placeholder="Enter Location">
-        <button class="btn-go">GO</button>
-        <button class="btn-my-location">My Location</button>
-        <h2><strong>Location: </strong><span class="location-name"></span></h2>
-        <button class="btn-my-copy">Copy Location</button>
-        <div class="weather"></div>
+        <section class="header-container">
+            <h1>TravelTip</h1>
+            <div class="form">
+                <input type="text" class="name-location" placeholder="Enter Location">
+                <button class="btn btn-go">GO</button>
+                <button class="btn btn-my-location">My Location</button>
+            </div>
+        </section>
+        <section class="secend-container">
+            <h2><strong>Location: </strong><span class="location-name"></span></h2>
+            <button class="btn btn-my-copy">Copy Location</button>
+        </section>
+        <div class="weather-container"></div>
         <div id="map" style="width: 100%; height: 400px;"></div>
     </div>
 
