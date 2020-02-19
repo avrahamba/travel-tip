@@ -6,6 +6,10 @@ function getLocs(address) {
         .then(res => res.data.results[0].geometry.location)
 }
 
+function getReverseGeo(coord) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${KEY}`)
+        .then(res => {return{address:res.data.results[0].formatted_address,coord}})
+}
 
 function getPosition() {
     console.log('Getting Pos');
@@ -20,4 +24,5 @@ function getPosition() {
 export default {
      getLocs,
      getPosition,
+     getReverseGeo
 }
