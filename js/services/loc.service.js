@@ -23,7 +23,7 @@ function getLocationForSharing() {
 }
 
 export default {
-    getLocs: getLocs,
-    getPosition: getPosition,
-    getLocationForSharing:getLocationForSharing
+     getLocs,
+     getPosition,
+    getLocationForSharing
 }
