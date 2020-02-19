@@ -1,1 +1,0 @@
-const WKEY = '3a42f7c7c101af6259a6c25a835b449e';
