@@ -1,11 +1,12 @@
-
-import locService from './services/loc.service.js'
+'use strict';
+import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 import { weatherService } from './services/weather.service.js'
 
-
-
 window.onload = () => {
+    document.querySelector('.btn-go').addEventListener('click', onGo)
+    document.querySelector('.btn-my-copy').addEventListener('click', onCopy)
+    document.querySelector('.btn-my-location').addEventListener('click', onMyLocaion)
 
     getPositionFromUrl()
         .then((pos) => {
@@ -30,73 +31,62 @@ window.onload = () => {
         .then(map => locService.getReverseGeo({ lat: map.center.lat(), lng: map.center.lng() }))
         .then(res => {
             document.querySelector('.location-name').innerText = res.address;
-            return res.coord
+            return res.coords
         })
         .then(weatherService.getWeather)
         .then(renderWeather)
 
-    document.querySelector('.btn-my-copy').addEventListener('click', (ev) => {
-        const copyText = getLocationForSharing();
-        const el = document.createElement('input');
-        el.type = 'text';
-        el.value = copyText;
-        document.body.appendChild(el);
-        el.select();
-        el.setSelectionRange(0, 99999)
-        document.execCommand('copy');
-        document.querySelector('.btn-my-copy').innerText = 'copied!';
-        document.body.removeChild(el);
-    })
-
-    document.querySelector('.btn-go').addEventListener('click', (ev) => {
-        const nameLocation = document.querySelector('.name-location').value;
-        locService.getLocs(nameLocation)
-            .then(loc => {
-                mapService.panTo(loc);
-                return loc
-            })
-            .then(locService.getReverseGeo)
-            .then(res => {
-                document.querySelector('.location-name').innerText = res.address;
-                return res.coord
-            })
-            .then(loc => weatherService.getWeather(loc))
-            .then(renderWeather)
-    })
-
-    document.querySelector('.btn-my-copy').addEventListener('click', (ev) => {
-        const copyText = getLocationForSharing();
-        copyText.select();
-        copyText.setSelectionRange(0, 99999)
-        document.execCommand("copy");
-        document.querySelector('.btn-my-copy').innerText = 'copied!';
-    })
-
-    document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
-        locService.getPosition()
-            .then(loc => {
-                const coord = {
-                    lat: loc.coords.latitude,
-                    lng: loc.coords.longitude
-                }
-                mapService.panTo(coord);
-                return coord
-            })
-            .then(locService.getReverseGeo)
-            .then(res => {
-                document.querySelector('.location-name').innerText = res.address;
-                return res.coord
-            })
-            .then(loc => weatherService.getWeather(loc))
-            .then(renderWeather)
-    })
+}
+function onCopy() {
+    const copyText = getLocationForSharing();
+    const elFake = document.createElement('input');
+    elFake.type = 'text';
+    elFake.value = copyText;
+    document.body.appendChild(elFake);
+    elFake.select();
+    elFake.setSelectionRange(0, 99999)
+    document.execCommand('copy');
+    document.querySelector('.btn-my-copy').innerText = 'copied!';
+    document.body.removeChild(elFake);
+}
+function onMyLocaion() {
+    locService.getPosition()
+        .then(loc => {
+            const coords = {
+                lat: loc.coords.latitude,
+                lng: loc.coords.longitude
+            }
+            mapService.panTo(coords);
+            return coords
+        })
+        .then(locService.getReverseGeo)
+        .then(res => {
+            document.querySelector('.location-name').innerText = res.address;
+            return res.coords
+        })
+        .then(loc => weatherService.getWeather(loc))
+        .then(renderWeather)
+}
+function onGo() {
+    const nameLocation = document.querySelector('.name-location').value;
+    locService.getLocs(nameLocation)
+        .then(loc => {
+            mapService.panTo(loc);
+            return loc
+        })
+        .then(locService.getReverseGeo)
+        .then(location => {
+            document.querySelector('.location-name').innerText = location.address;
+            return location.coords
+        })
+        .then(loc => weatherService.getWeather(loc))
+        .then(renderWeather)
 }
 function getLocationForSharing() {
     const pos = mapService.getMarkerPos();
     const strURL = `https://avrahamba.github.io/travel-tip/?lat=${pos.lat}&lng=${pos.lng}`;
     return strURL;
 }
-
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -106,7 +96,6 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
-
 function getPositionFromUrl() {
     const lat = +getParameterByName('lat');
     const lng = +getParameterByName('lng');
@@ -114,7 +103,6 @@ function getPositionFromUrl() {
     return Promise.resolve({ coords: { latitude: lat, longitude: lng } })
 }
 function renderWeather(watherObj) {
-
     document.querySelector('.weather-container').innerHTML =
         `
     <h2>Weather today</h2>
